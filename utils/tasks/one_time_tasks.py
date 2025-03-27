@@ -7,18 +7,18 @@ from db.mongo.models.recommendation import Recommendation
 
 @task()
 def create_recommendations_collection_on_mongodb(ctx):
-  try:
-    print('Task started...')
-    db = BaseMongoModel.get_database()
-    collection_name = constants.RECOMMENDATION_COLLECTION_NAME
-    db.create_collection(collection_name, validator = recommendation_schema, validationLevel = "strict")
-    print(f"Collection '{collection_name}' created successfully.")
-    print('Task completed')
-  except Exception as e:
-    if "already exists" in str(e):
-        print(f"Collection '{collection_name}' already exists.")
-    else:
-        print(f"Unexpected error: {e}")
+	try:
+		print('Task started...')
+		db = BaseMongoModel.get_database()
+		collection_name = constants.RECOMMENDATION_COLLECTION_NAME
+		db.create_collection(collection_name, validator = recommendation_schema, validationLevel = "strict")
+		print(f"Collection '{collection_name}' created successfully.")
+		print('Task completed')
+	except Exception as e:
+		if "already exists" in str(e):
+			print(f"Collection '{collection_name}' already exists.")
+		else:
+			print(f"Unexpected error: {e}")
 
 @task()
 def populate_recommendations_collection(ctx):
@@ -27,16 +27,16 @@ def populate_recommendations_collection(ctx):
     columns = result.get('columns')
 
     for row in rows:
-       record_hash = dict(zip(columns, row))
-       payload = {
+        record_hash = dict(zip(columns, row))
+        payload = {
             'model': record_hash.get('model'),
             'provider': record_hash.get('provider'),
             'response': record_hash.get('response'),
             'archived': record_hash.get('archived'),
             'created_at': record_hash.get('created_at'),
             'updated_at': record_hash.get('created_at')
-       }
-       Recommendation.create_document(payload)
+        }
+        Recommendation.create_document(payload)
 
     print('Recommendations collection populated successfully.')
 

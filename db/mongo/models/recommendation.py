@@ -7,7 +7,7 @@ class Recommendation(BaseMongoModel):
     model = StringField(required = True)
     provider = StringField(required = True)
     response = DictField(required = True)
-    archived = BooleanField(default = True)
+    archived = BooleanField(required = True)
     created_at = DateTimeField(default = lambda: datetime.now(timezone.utc))
     updated_at = DateTimeField(default = lambda: datetime.now(timezone.utc))
 

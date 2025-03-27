@@ -5,7 +5,7 @@ api:
   openai:
     key: "{OPENAI_API_KEY}"
     url: "https://api.openai.com/v1/chat/completions"
-    model: "gpt-4.0-mini"
+    model: "gpt-4o-mini"
   huggingface:
     key: "{HUGGINGFACE_API_KEY}"
     url: "https://router.huggingface.co/together/v1/chat/completions"

@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 _engine = create_engine(constants.SUPABASE_DB_URL, echo=constants.APP_ENV == 'development', pool_size=5, pool_recycle=3600, max_overflow=10)
 
 def get_session():
+	logger.info(f"Creating a new session with Postgres...")
 	return sessionmaker(bind = _engine)
 
 def execute_query(raw_query, params = None):

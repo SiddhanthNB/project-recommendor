@@ -41,7 +41,7 @@ def generate_and_save_recommendations():
             if isinstance(response, list) and len(response) > 0:
                 return _persist_recommendations(response, service.model_name, provider_name)
             else:
-                raise Exception("Did not receive expected response from the api call")
+                raise Exception("Did not receive expected json response from the api call")
         except Exception as e:
             logger.warning(f"Response generation failed for {provider_name} with ERROR: {e}")
             continue

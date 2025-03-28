@@ -8,3 +8,4 @@ SQLAlchemy==2.0.39
 urllib3==2.3.0
 invoke==2.2.0
 streamlit==1.44.0
+python-dotenv==1.0.1

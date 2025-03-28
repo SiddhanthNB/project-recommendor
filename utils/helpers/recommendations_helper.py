@@ -47,3 +47,7 @@ def generate_and_save_recommendations():
             continue
 
     raise Exception("Failed to generate response: No response from any provider!")
+
+def fetch_active_recommendations_from_db():
+    records = Recommendation.fetch_documents({'archived': False})
+    return [ record.to_dict() for record in records ]

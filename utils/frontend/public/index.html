@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    window.onload = () => {
+      let browser_id = localStorage.getItem("browser_id");
+      if (!browser_id) {
+        browser_id = crypto.randomUUID();
+        localStorage.setItem("browser_id", browser_id);
+      }
+
+      // Send it to Streamlit
+      const streamlitComponent = window.streamlitComponent;
+      streamlitComponent.setComponentValue(browser_id);
+    };
+  </script>
+</head>
+<body>
+</body>
+</html>

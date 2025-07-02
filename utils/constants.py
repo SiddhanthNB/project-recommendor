@@ -9,7 +9,7 @@ APP_ENV = os.getenv('APP_ENV', 'production')
 
 SUPABASE_DB_PASSWORD = os.getenv('SUPABASE_DB_PASSWORD')
 SUPABASE_DB_URL = os.getenv('SUPABASE_DB_URL').replace('[YOUR-PASSWORD]', quote_plus(SUPABASE_DB_PASSWORD))
- 
+
 ATLAS_DB_PASSWORD = os.getenv('ATLAS_DB_PASSWORD')
 ATLAS_DB_URL = os.getenv('ATLAS_DB_URL').replace('<db_password>', quote_plus(ATLAS_DB_PASSWORD))
 

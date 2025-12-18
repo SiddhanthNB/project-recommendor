@@ -1,7 +1,5 @@
-import config.mongo
 from invoke.collection import Collection
-from utils.tasks.one_time_tasks import create_recommendations_collection_on_mongodb, populate_recommendations_collection
+from utils.tasks.one_time_tasks import one_time_tasks_ns
 
 ns = Collection()
-ns.add_task(create_recommendations_collection_on_mongodb)
-ns.add_task(populate_recommendations_collection)
+ns.add_collection(one_time_tasks_ns)

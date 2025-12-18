@@ -1,1 +1,1 @@
-"Please recommend 5 unique and interesting AI/ML hobby projects based on the guidelines provided."
+Generate 5 new, non-overlapping AI/ML hobby project ideas that meet the system instructions. Make them practical, data-backed, and interesting for a solo developer.

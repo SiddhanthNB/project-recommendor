@@ -1,31 +1,34 @@
 import os
-import yaml
+import json
+from typing import Any
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
 
 load_dotenv()
 
-APP_ENV = os.getenv('APP_ENV', 'production')
+def _get_env(key: str, default: Any = None, required: bool = False) -> Any:
+    value = os.getenv(key, default)
+    if required and (value is None or value == ""):
+        raise ValueError(f"Missing required config: {key}")
+    return value
 
-SUPABASE_DB_PASSWORD = os.getenv('SUPABASE_DB_PASSWORD')
-SUPABASE_DB_URL = os.getenv('SUPABASE_DB_URL').replace('[YOUR-PASSWORD]', quote_plus(SUPABASE_DB_PASSWORD))
- 
-ATLAS_DB_PASSWORD = os.getenv('ATLAS_DB_PASSWORD')
-ATLAS_DB_URL = os.getenv('ATLAS_DB_URL').replace('<db_password>', quote_plus(ATLAS_DB_PASSWORD))
+PROJECT_NAME = 'project-recommender'
 
-ATLAS_DB_NAME = os.getenv('ATLAS_DB_NAME')
-RECOMMENDATION_COLLECTION_NAME = os.getenv('RECOMMENDATION_COLLECTION_NAME')
+APP_ENV = _get_env("APP_ENV", "production")
 
-try:
-    with open('utils/services.yaml', 'r') as f:
-        _config_str = f.read()
-    _config_str = _config_str.format(**os.environ)
-    _settings = yaml.safe_load(_config_str)
-except FileNotFoundError:
-    raise Exception(f"Config file not found!")
-except KeyError as e:
-    raise Exception(f"Missing environment variable: {e}")
-except Exception as e:
-    raise Exception(f"Error reading config file: {e}")
+CORENEST_API_URL = _get_env("CORENEST_API_URL", required=True)
+CORENEST_SECRET_KEY = _get_env("CORENEST_SECRET_KEY", required=True)
 
-API = _settings['api']
+# Mongo is deprecated; keep optional to avoid import failures if env vars are absent.
+_mongo_user_password = _get_env("MONGO_USER_PASSWORD", default=None, required=False)
+MONGO_CLUSTER_URI = _get_env("MONGO_CLUSTER_URI", default="", required=False)
+if MONGO_CLUSTER_URI and _mongo_user_password:
+    MONGO_CLUSTER_URI = MONGO_CLUSTER_URI.replace("<db_password>", quote_plus(_mongo_user_password))
+
+MONGO_DATABASE_NAME = _get_env("MONGO_DATABASE_NAME", "project_recommendation")
+MONGO_COLLECTION_NAME = _get_env("MONGO_COLLECTION_NAME", "recommendations")
+
+GOOGLE_SPREADSHEET_ID = _get_env("GOOGLE_SPREADSHEET_ID", required=True)
+GOOGLE_SHEET_NAME = _get_env("GOOGLE_SHEET_NAME", "AI/ML Ideas")
+
+GOOGLE_SERVICE_ACCOUNT_JSON = json.loads(_get_env("GOOGLE_SERVICE_ACCOUNT_JSON", required=True))

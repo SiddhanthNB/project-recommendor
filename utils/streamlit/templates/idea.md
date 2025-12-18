@@ -2,7 +2,9 @@
 
 **Description**: {brief_description}
 
-**Stack**: {stack}
+**Stack**:
+
+{stack}
 
 **Implementation Steps**:
 

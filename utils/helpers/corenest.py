@@ -47,6 +47,8 @@ def generate_ideas() -> List[Dict[str, Any]]:
         "user_prompt": user_prompt,
         "structured_output": True,
     }
+
+    logger.info("Sending request to CoreNest completions API at %s", url)
     raw = _dispatch_request(url, method="post", payload=payload)
 
     data = raw.get("result") if isinstance(raw, dict) else raw

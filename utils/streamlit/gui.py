@@ -127,14 +127,15 @@ def _append_pending_to_sheet():
 def _fetch_ideas():
     st.session_state.is_generating = True
     try:
-        with st.spinner("Generating new ideas..."):
+        with st.spinner("Please wait while new project concepts are being generated…"):
             ideas = generate_ideas()
         if not ideas:
-            st.warning("No ideas returned. Try again.")
+            st.warning("Something went wrong. Please try again.")
             return
         st.session_state.ideas = ideas
         st.session_state.idea_pointer_index = 0
         st.session_state.pending_sheet_append = ideas
+        logger.info("Ideas fetched and stored in session: %s items", len(ideas))
     except Exception as exc:
         logger.error("Failed to generate ideas: %s", exc, exc_info=True)
         st.error("Failed to generate ideas. Please try again.")
@@ -192,6 +193,7 @@ def render_main_ui():
         st.write("Tap the button to generate project ideas.")
         if st.button("Generate ideas", type="primary", disabled=st.session_state.is_generating):
             _fetch_ideas()
+            st.rerun()
         return
 
     _render_idea_carousel()
@@ -200,6 +202,7 @@ def render_main_ui():
     st.write("Want a different set? Try generating more ideas.")
     if st.button("Generate more ideas", type="primary", disabled=st.session_state.is_generating):
         _fetch_ideas()
+        st.rerun()
 
     # Append to Sheets after rendering so the UI stays responsive.
     _append_pending_to_sheet()

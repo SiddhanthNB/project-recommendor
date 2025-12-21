@@ -1,5 +1,6 @@
 AI/ML Project Recommender
 =========================
+Live app: https://project-ideas-recommender.streamlit.app/
 
 Generate small, buildable AI/ML project concepts with real data sources, view them in a Streamlit UI, and log batches to Google Sheets for later reference.
 

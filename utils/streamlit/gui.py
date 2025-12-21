@@ -183,6 +183,15 @@ def _render_idea_carousel():
 
 def render_main_ui():
     _init_session_state()
+    with st.sidebar:
+        st.header("Note")
+        st.write("Generated project ideas are stored to a Google Sheet for safekeeping.")
+        st.write("Feel free to explore the archive of past ideas.")
+        st.markdown(
+            '<a href="https://docs.google.com/spreadsheets/d/1xahIDKiqa0a8pKnyEziGGcvMwHSqABA9y_ybUtwIsCc/edit?gid=0#gid=0" target="_blank">View archive (read-only)</a>',
+            unsafe_allow_html=True,
+        )
+
     st.title("AI/ML Project Ideas")
     st.write("Discover hands-on AI/ML project suggestions with clear steps and real data sources.")
     st.write("Perfect for learners and enthusiasts looking to build practical skills.")
